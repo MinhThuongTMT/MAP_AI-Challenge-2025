@@ -14,9 +14,6 @@ Mã hoá bản đồ:
 
 shelf_positions: Các vị trí kệ hàng (tọa độ của từng loại sản phẩm).
 
-python
-Copy
-Edit
 map_data = [[1 for _ in range(40)] for _ in range(40)]
 Các dòng và cột nhất định được cấu hình là đường đi ngang và dọc, tạo nên các lối đi giữa các kệ.
 
@@ -44,9 +41,7 @@ Hàm find_user_position() quét toàn bộ map_data để tìm vị trí có gi�
 
 📌 5. Thuật toán tìm đường đi – Breadth-First Search (BFS)
 ✔ Thuật toán được cài trong hàm:
-python
-Copy
-Edit
+
 def find_path(start, goal):
 ✔ Ý tưởng:
 Tìm đường ngắn nhất (ít bước nhất) từ vị trí người dùng đến một kệ hàng bất kỳ.
@@ -83,9 +78,6 @@ Cập nhật current_shelf (kệ cần đến).
 
 Tính lại đường đi mới từ user_pos đến vị trí mới trong shelf_positions.
 
-python
-Copy
-Edit
 key_map = {
     pygame.K_1: "sua",
     pygame.K_2: "banhkeo",
