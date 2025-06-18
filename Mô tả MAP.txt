@@ -1,0 +1,119 @@
+📌 1. Mục đích của chương trình
+Chương trình mô phỏng bản đồ siêu thị và sử dụng thuật toán tìm đường BFS để tìm lộ trình từ vị trí người dùng đến các kệ hàng (như sữa, bánh kẹo, trái cây, nước, muối/đường). Giao diện được hiển thị bằng thư viện Pygame.
+
+📌 2. Cấu trúc bản đồ
+Kích thước bản đồ: 40 x 40 ô (800x800 pixels vì mỗi ô là 20x20).
+
+Mã hoá bản đồ:
+
+1: Tường (không thể đi qua).
+
+0: Đường đi (có thể đi được).
+
+2: Vị trí người dùng ban đầu.
+
+shelf_positions: Các vị trí kệ hàng (tọa độ của từng loại sản phẩm).
+
+python
+Copy
+Edit
+map_data = [[1 for _ in range(40)] for _ in range(40)]
+Các dòng và cột nhất định được cấu hình là đường đi ngang và dọc, tạo nên các lối đi giữa các kệ.
+
+📌 3. Các màu sắc và ký hiệu
+Sử dụng pygame.draw.rect để vẽ bản đồ, mỗi loại ô có màu sắc riêng biệt:
+
+Xám: Tường.
+
+Xanh dương: Sữa.
+
+Vàng: Bánh kẹo.
+
+Xanh lá: Trái cây.
+
+Cyan: Nước.
+
+Trắng: Muối/đường.
+
+Đỏ: Người dùng.
+
+Cam viền: Đường đi (route tìm được từ thuật toán).
+
+📌 4. Tìm vị trí người dùng
+Hàm find_user_position() quét toàn bộ map_data để tìm vị trí có giá trị 2 và trả về tọa độ (x, y) của người dùng.
+
+📌 5. Thuật toán tìm đường đi – Breadth-First Search (BFS)
+✔ Thuật toán được cài trong hàm:
+python
+Copy
+Edit
+def find_path(start, goal):
+✔ Ý tưởng:
+Tìm đường ngắn nhất (ít bước nhất) từ vị trí người dùng đến một kệ hàng bất kỳ.
+
+✔ Hoạt động:
+Sử dụng hàng đợi (queue) để duyệt theo chiều rộng.
+
+Duy trì một tập visited để không đi vào những ô đã đi.
+
+Duyệt theo 4 hướng: trái, phải, lên, xuống.
+
+Mỗi bước duyệt sẽ kiểm tra:
+
+Có nằm trong bản đồ hay không?
+
+Có phải đường đi (0) hay không?
+
+Có bị duyệt rồi chưa?
+
+✔ Trả về:
+Một danh sách tọa độ từ start đến goal nếu tìm được đường. Ngược lại, trả về danh sách rỗng [].
+
+📌 6. Giao diện và hiển thị bằng Pygame
+draw_map(): Vẽ từng ô theo màu tương ứng.
+
+draw_text(): Vẽ văn bản hướng dẫn và mô tả.
+
+draw_path(path): Vẽ đường đi theo kết quả thuật toán BFS bằng đường viền màu cam.
+
+📌 7. Điều khiển bằng bàn phím
+Khi người dùng nhấn phím số (1–5) thì chương trình sẽ:
+
+Cập nhật current_shelf (kệ cần đến).
+
+Tính lại đường đi mới từ user_pos đến vị trí mới trong shelf_positions.
+
+python
+Copy
+Edit
+key_map = {
+    pygame.K_1: "sua",
+    pygame.K_2: "banhkeo",
+    pygame.K_3: "traicay",
+    pygame.K_4: "nuoc",
+    pygame.K_5: "muoiduong"
+}
+📌 8. Vòng lặp chính và bất đồng bộ
+Sử dụng asyncio để tạo vòng lặp bất đồng bộ (async def main()).
+
+Cập nhật liên tục giao diện trong khi vẫn phản hồi sự kiện phím người dùng.
+
+Sử dụng asyncio.sleep(1.0 / FPS) để duy trì tốc độ khung hình.
+
+📌 9. Khả năng mở rộng
+Có thể mở rộng thêm nhiều loại sản phẩm/kệ mới.
+
+Có thể cho phép người dùng di chuyển tự do và điều hướng theo thời gian thực.
+
+Có thể tích hợp thuật toán khác như A* để tối ưu đường đi với chi phí.
+
+📌 10. Tóm tắt luồng hoạt động
+Tạo bản đồ, vị trí người dùng, vị trí kệ.
+
+Tìm đường đi từ người dùng đến một kệ bằng thuật toán BFS.
+
+Vẽ bản đồ và đường đi trên giao diện Pygame.
+
+Chờ người dùng bấm phím để chuyển đến kệ khác.
+
+Cập nhật lại đường đi, vẽ lại bản đồ.
